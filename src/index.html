@@ -6,14 +6,50 @@
     <title>Weather Forecast Application</title>
     <link href="./output.css" rel="stylesheet">
 </head>
-<body>
+<body class="bg-gray-900 text-white">
     <header>
-        <h1 class="text-3xl font-bold text-center my-4">
-            Weather Forecast Application
-        </h1>
+        <h1 class="text-2xl font-bold text-center my-4">Weather Forecast Application</h1>
+        <nav class="flex flex-col items-center">
+            <section>
+                <label for="city-input">Enter City Name :</label>
+                <div>
+                    <input type="text" id="city-input" placeholder="E.g. Hyderabad, London" class="border p-2 rounded-md mr-2 mt-2">
+                    <button id="search-city-btn" class="bg-blue-500 p-2 rounded-md">Search City</button>
+                </div> 
+            </section>
+            <section class="flex flex-col gap-2 justify-center items-center mt-2">
+                <span>or</span>
+                <button id="use-current-location-btn" class="bg-blue-500 p-2 rounded-md">Use Current Location</button>
+            </section>
+        </nav>
     </header>
     <main>
-
+        <section>
+            <h2 class="font-bold text-center mt-8">Current Weather</h2>
+            <div id="current-weather" class="flex flex-col m-4">
+                <!-- Current weather details will be dynamically inserted here -->
+                 <!-- Template
+                 <h3>Current City (Date)</h3>
+                 <p>Temperature : --°C</p>
+                 <p>Wind : --m/sec</p>
+                 <p>Humidity : --%</p>
+                 -->
+            </div>
+        </section>
+        <section>
+            <h2 class="font-bold text-center mt-8">5-Day Forecast</h2>
+            <section>
+                <div id="forecast-container" class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4 p-4">
+                    <!-- Forecast cards will be dynamically inserted here -->
+                     <!-- Template
+                    <h3>Date</h3>
+                    <p>Temperature : --°C</p>
+                    <p>Wind : --m/sec</p>
+                    <p>Humidity : --%</p>
+                    -->
+                </div>
+            </section>
+        </section>
     </main>
 </body>
 </html>
