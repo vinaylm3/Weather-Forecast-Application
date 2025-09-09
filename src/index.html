@@ -4,73 +4,72 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Weather Forecast Application</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="./output.css" rel="stylesheet">
 </head>
-<body class="bg-gray-900 text-white">
+<body class="text-white bg-gradient-to-br from-[#2980B9] via-[#6DD5FA] to-[#ffffff]">
     <header>
-        <h1 class="text-2xl font-bold text-center my-4">Weather Forecast Application</h1>
+        <h1 class="text-3xl font-bold text-center my-4">Weather Forecast App</h1>
         <nav class="flex flex-col items-center">
             <section>
                 <label for="city-input">Enter City Name :</label>
                 <div>
-                    <input type="text" id="city-input" placeholder="E.g. Hyderabad, London" class="border p-2 rounded-md mr-2 mt-2">
-                    <button id="search-city-btn" class="bg-blue-500 p-2 rounded-md">Search City</button>
+                    <input type="text" id="city-input" placeholder="e.g. Hyderabad, Mumbai" class="bg-gray-800 pl-4 pr-4 p-2 rounded-4xl mt-2" spellcheck="false">
+                    <button id="search-city-btn" class="bg-gray-800 p-2 rounded-4xl"><i class="fa-solid fa-magnifying-glass fa-lg"></i></button>
                 </div> 
             </section>
             <section class="flex flex-col gap-2 justify-center items-center mt-2">
                 <span>or</span>
-                <button id="use-current-location-btn" class="bg-blue-500 p-2 rounded-md">Use Current Location</button>
+                <button id="use-current-location-btn" class="bg-gray-800 pl-4 pr-4 p-2 rounded-4xl">Use Current Location</button>
             </section>
         </nav>
     </header>
     <main>
         <section>
-            <h2 class="font-bold text-center mt-8">Current Weather</h2>
-            <div id="current-weather" class="flex flex-col m-4">
-                <!-- Current weather details will be dynamically inserted here -->
-                <!-- Template -->
-                <h3>Current City : - (--/--/--)</h3>
-                <p>Temperature : --°C</p>
-                <p>Wind : --m/sec</p>
-                <p>Humidity : --%</p>
-                
-            </div>
+            <h2 class="font-bold text-center text-2xl mt-6">Current Weather</h2>
+            <!-- Current weather details will be dynamically inserted here -->
+            <!-- Template -->
+            <section id="current-weather" >
+                <div class="flex flex-col m-6 items-center justify-between border-black p-4 rounded-4xl shadow-2xl shadow-black bg-gray-800">
+                    <img src="https://openweathermap.org/img/wn/02d@2x.png" alt="few clouds icon" class="w-30 h-30">
+                    <div class="flex flex-col gap-4">
+                        <p class="text-center text-3xl">-- °C</p>
+                        <h3 class="text-center text-2xl">City Name</h3>
+                        <div class="flex gap-16 mt-4">
+                            <div class="flex flex-col gap-4">
+                                <div class="flex gap-4 items-center">
+                                    <img src="img/humidity.png" alt="Humidity Icon" class="w-8 h-8">
+                                    <p>- %</p>
+                                </div>
+                                <p class="text-center">Humidity</p>
+                            </div>
+                            <div class="flex flex-col gap-4">
+                                <div class="flex gap-4 items-center">
+                                <img src="img/wind.png" alt="Wind Icon" class="w-8 h-8">
+                                <p>- m/sec</p>
+                                </div>
+                                <p class="text-center">Wind Speed</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </section>
         <section>
-            <h2 class="font-bold text-center mt-8">5-Day Forecast</h2>
+            <h2 id="forecast" class="font-bold text-center text-2xl mt-12 hidden">5-Day Forecast</h2>
             <section id="forecast-container" class="grid grid-cols-1 gap-4 p-4">
                 <!-- Forecast cards will be dynamically inserted here -->
-                <!-- Template -->
-                <div>
-                    <h3>Date : --/--/--</h3>
-                    <p>Temperature : --°C</p>
-                    <p>Wind : --m/sec</p>
-                    <p>Humidity : --%</p> 
+                <!-- Template 
+                <div class="flex m-2 items-center justify-between border-black p-4 rounded-4xl shadow-2xl shadow-black bg-gray-800">
+                    <div>
+                        <h3>Date : --/--/--</h3>
+                        <p>Temperature : -- °C</p>
+                        <p>Humidity : -- %</p> 
+                        <p>Wind : -- m/sec</p>
+                    </div>
+                    <img src="https://openweathermap.org/img/wn/02d@2x.png" alt="few clouds icon" class="w-30 h-30">
                 </div>
-                <div>
-                    <h3>Date : --/--/--</h3>
-                    <p>Temperature : --°C</p>
-                    <p>Wind : --m/sec</p>
-                    <p>Humidity : --%</p> 
-                </div>
-                <div>
-                    <h3>Date : --/--/--</h3>
-                    <p>Temperature : --°C</p>
-                    <p>Wind : --m/sec</p>
-                    <p>Humidity : --%</p> 
-                </div>
-                <div>
-                    <h3>Date : --/--/--</h3>
-                    <p>Temperature : --°C</p>
-                    <p>Wind : --m/sec</p>
-                    <p>Humidity : --%</p> 
-                </div>
-                <div>
-                    <h3>Date : --/--/--</h3>
-                    <p>Temperature : --°C</p>
-                    <p>Wind : --m/sec</p>
-                    <p>Humidity : --%</p> 
-                </div>
+                -->
             </section>
         </section>
     </main>
