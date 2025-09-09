@@ -69,15 +69,15 @@ function updateCurrentWeatherUI(data) {
                 <div class="flex gap-16 mt-4">
                     <div class="flex flex-col gap-4">
                         <div class="flex gap-4 items-center">
-                            <img src="img/humidity.png" alt="Humidity Icon" class="w-8 h-8">
+                            <i class="fa-solid fa-water fa-2xl" style="color: #ffffff;"></i>
                             <p>${data.main.humidity} %</p>
                         </div>
                         <p class="text-center">Humidity</p>
                     </div>
                     <div class="flex flex-col gap-4">
                         <div class="flex gap-4 items-center">
-                        <img src="img/wind.png" alt="Wind Icon" class="w-8 h-8">
-                        <p>${data.wind.speed} m/sec</p>
+                            <i class="fa-solid fa-wind fa-2xl" style="color: #ffffff;"></i>
+                            <p>${data.wind.speed} m/sec</p>
                         </div>
                         <p class="text-center">Wind Speed</p>
                     </div>
@@ -96,11 +96,11 @@ function updateForecastUI(data) {
         const newforecast = document.createElement('div');
         newforecast.innerHTML = `
             <div class="flex m-2 items-center justify-between border-black p-4 rounded-4xl shadow-2xl shadow-black bg-gray-800">
-                <div>
-                    <h3>Date : ${data.list[i].dt_txt.split(' ')[0]}</h3>
-                    <p>Temperature : ${data.list[i].main.temp} °C</p>
-                    <p>Humidity : ${data.list[i].main.humidity} %</p>
-                    <p>Wind : ${data.list[i].wind.speed} m/sec</p>
+                <div class="flex flex-col gap-2">
+                    <h3><i class="fa-solid fa-calendar fa-lg mr-4" style="color: #ffffff;"></i>${data.list[i].dt_txt.split(' ')[0]}</h3>
+                    <p><i class="fa-solid fa-temperature-high fa-lg mr-4" style="color: #ffffff;"></i>${data.list[i].main.temp} °C</p>
+                    <p><i class="fa-solid fa-water fa-lg mr-4" style="color: #ffffff;"></i>${data.list[i].main.humidity} %</p>
+                    <p><i class="fa-solid fa-wind fa-lg mr-4" style="color: #ffffff;"></i>${data.list[i].wind.speed} m/sec</p>
                 </div>
                 <img src=${updateWeatherIcon(data.list[i].weather[0].description)} alt="${data.list[i].weather[0].description} icon" class="w-30 h-30">
             </div>
