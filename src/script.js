@@ -13,10 +13,16 @@ convertToCelsiusBtn.addEventListener('click', convertToCelsius);
 
 searchCityBtn.addEventListener('click', () => {
     const city = document.getElementById('city-input').value;
-    console.log(`Searching weather for city: ${city}`);
-    // Add functionality to fetch and display weather for the entered city
-    fetchData(city);
-    fetchForecastData(city);
+    if (!city) {
+        alert('Please enter a city name.');
+        return;
+    }
+    else {
+        console.log(`Searching weather for city : ${city}`);
+        // Add functionality to fetch and display weather for the entered city
+        fetchData(city);
+        fetchForecastData(city);
+    }
 })
 
 useCurrentLocationBtn.addEventListener('click', () => {
@@ -39,6 +45,10 @@ useCurrentLocationBtn.addEventListener('click', () => {
 
 async function fetchData(city) {
     let response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=cc8a426c15f687049c1626d5f6b41409&units=metric`);
+    if (!response.ok) {
+        alert('City not found. Please enter a valid city name.');
+        return;
+    }
     let data = await response.json();
     console.log(data);
     updateCurrentWeatherUI(data)
@@ -111,7 +121,6 @@ function updateForecastUI(data) {
     forecastDiv.innerHTML = ''; // Clear previous forecast data
     // Update the forecast section with fetched data
     for (let i=5; i<data.list.length; i+=8) {
-        //console.log(data.list[i]);
         const newforecast = document.createElement('div');
         newforecast.innerHTML = `
             <div class="flex m-2 items-center justify-between border-black p-4 rounded-4xl shadow-2xl shadow-black bg-gray-800">
