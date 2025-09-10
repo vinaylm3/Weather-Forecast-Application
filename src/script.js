@@ -4,6 +4,7 @@ const currentWeatherDiv = document.getElementById('current-weather');
 const forecastHeader = document.getElementById('forecast');
 const forecastDiv = document.getElementById('forecast-container');
 
+let currentWeatherCard = document.getElementById('current-weather-card');
 let convertToFahrenheitBtn = document.getElementById('convert-to-fahrenheit');
 let convertToCelsiusBtn = document.getElementById('convert-to-celsius');
 let currentTempP = document.getElementById('current-temp');
@@ -79,7 +80,7 @@ function updateCurrentWeatherUI(data) {
     currentWeatherDiv.innerHTML = ''; // Clear previous current weather data
     // Update the current weather section with fetched data
     currentWeatherDiv.innerHTML = `
-        <div class="flex flex-col m-6 items-center justify-between border-black p-4 rounded-4xl shadow-2xl shadow-black bg-gray-800">
+        <div id="current-weather-card" class="flex flex-col m-6 items-center justify-between border-black p-4 rounded-4xl shadow-2xl shadow-black bg-gray-800">
             <img src=${updateWeatherIcon(data.weather[0].description)} alt="${data.weather[0].description} icon" class="w-30 h-30">
             <div class="flex flex-col gap-4">
                 <h3 class="text-center text-2xl">${data.name}</h3>
@@ -109,6 +110,7 @@ function updateCurrentWeatherUI(data) {
 }
 
 function reassignTempAndButtons() {
+    currentWeatherCard = document.getElementById('current-weather-card');
     convertToFahrenheitBtn = document.getElementById('convert-to-fahrenheit');
     convertToCelsiusBtn = document.getElementById('convert-to-celsius');
     currentTempP = document.getElementById('current-temp');
@@ -133,6 +135,11 @@ function updateForecastUI(data) {
                 <img src=${updateWeatherIcon(data.list[i].weather[0].description)} alt="${data.list[i].weather[0].description} icon" class="w-30 h-30">
             </div>
         `;
+        const forecastcard = newforecast.querySelector('div');
+        if (data.list[i].weather[0].description.includes('rain') || data.list[i].weather[0].description.includes('drizzle') || data.list[i].weather[0].description.includes('thunderstorm'))
+        {
+            forecastcard.classList.add("bg-[url('img/rain-background.jpeg')]", "bg-cover", "bg-center");
+        }
         forecastDiv.appendChild(newforecast);
     }
 }
@@ -161,12 +168,14 @@ function updateWeatherIcon(description) {
         case 'shower rain and drizzle':
         case 'heavy shower rain and drizzle':
         case 'shower drizzle':
+            currentWeatherCard.classList.add("bg-[url('img/rain-background.jpeg')]", "bg-cover", "bg-center");
             return "https://openweathermap.org/img/wn/09d@2x.png";
         case 'light rain':
         case 'moderate rain':
         case 'heavy intensity rain':
         case 'very heavy rain':
         case 'extreme rain':
+            currentWeatherCard.classList.add("bg-[url('img/rain-background.jpeg')]", "bg-cover", "bg-center");
             return "https://openweathermap.org/img/wn/10d@2x.png";
         case 'thunderstorm with light rain':
         case 'thunderstorm with rain':
@@ -178,6 +187,7 @@ function updateWeatherIcon(description) {
         case 'thunderstorm with light drizzle':
         case 'thunderstorm with drizzle':
         case 'thunderstorm with heavy drizzle':
+            currentWeatherCard.classList.add("bg-[url('img/rain-background.jpeg')]", "bg-cover", "bg-center");
             return "https://openweathermap.org/img/wn/11d@2x.png";
         case 'light snow':
         case 'snow':
