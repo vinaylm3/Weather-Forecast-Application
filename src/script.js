@@ -9,6 +9,9 @@ const historyDropDown = document.getElementById('history-drop-down');
 const currentWeatherDiv = document.getElementById('current-weather');
 const forecastHeader = document.getElementById('forecast');
 const forecastDiv = document.getElementById('forecast-container');
+const overlay = document.getElementById("popup-overlay");
+const closeBtn = document.getElementById("close-popup");
+const popupMessage = document.getElementById("popup-message");
 
 // Initial references for temperature conversion
 let currentWeatherCard = document.getElementById('current-weather-card');
@@ -26,11 +29,25 @@ toggleBtn.addEventListener('click', toggleTemperatureUnits);
 // Event listener for history dropdown selection
 historyDropDown.addEventListener('change', historyOptionSelected);
 
+// Close popup when clicking the close button
+closeBtn.addEventListener("click", () => {
+    overlay.classList.add("hidden");
+});
+
+// Close when clicking outside the popup
+overlay.addEventListener("click", (event) => {
+    if (event.target === overlay) {
+    overlay.classList.add("hidden");
+    }
+});
+
 // Event listener for using search button
 searchCityBtn.addEventListener('click', () => {
     let city = document.getElementById('city-input').value.trim();
     if (!city) {
-        alert('Please enter a city name.');
+        // alert('Please enter a city name.');
+        popupMessage.innerHTML = "Please enter a city name.";
+        overlay.classList.remove("hidden");
         return;
     }
     else {
@@ -41,7 +58,6 @@ searchCityBtn.addEventListener('click', () => {
         fetchData(city);
         fetchForecastData(city);
         searchCityInput.value = ''; // Clear input field after search
-        addToHistory(city);
     }
 })
 
@@ -68,12 +84,15 @@ useCurrentLocationBtn.addEventListener('click', () => {
 async function fetchData(city) {
     let response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=cc8a426c15f687049c1626d5f6b41409&units=metric`);
     if (!response.ok) {
-        alert('City not found. Please enter a valid city name.');
+        // alert('City not found. Please enter a valid city name.');
+        popupMessage.innerHTML = "City not found.<br>Please enter a valid city name.";
+        overlay.classList.remove("hidden");
         return;
     }
     let data = await response.json();
     console.log(data);
-    updateCurrentWeatherUI(data)
+    updateCurrentWeatherUI(data);
+    addToHistory(city);
 }
 
 // Function to fetch weather data using coordinates

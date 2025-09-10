@@ -32,6 +32,18 @@
         </section>
     </header>
     <main>
+        <!-- Popup Overlay -->
+        <div id="popup-overlay"
+            class="fixed inset-0 bg-gradient-to-br from-[#2980B9] via-[#6DD5FA] to-[#ffffff] items-center justify-center z-50 flex flex-col hidden">
+            <!-- Popup Box -->
+            <div
+                class="text-white bg-gray-800 p-6 rounded-4xl w-80 flex flex-col items-center justify-center shadow-2xl shadow-black">
+                <h2 class="text-xl font-bold mb-4">Invalid City Name</h2>
+                <p id="popup-message" class="mb-8">This is a popup.</p>
+                <button id="close-popup"
+                    class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700">Close</button>
+            </div>
+        </div>
         <section>
             <h2 class="font-bold text-center text-2xl mt-4">Current Weather</h2>
             <!-- Current weather details will be dynamically inserted here -->
