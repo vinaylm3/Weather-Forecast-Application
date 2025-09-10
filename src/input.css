@@ -1,1 +1,10 @@
 @import "tailwindcss";
+
+.popup-anim-icon {
+    @apply transition delay-50 duration-200 ease-in-out hover:scale-110 hover:text-[#1E90FF];
+}
+
+.popup-anim-btn {
+    @apply transition delay-50 duration-200 ease-in-out bg-[#1E90FF] hover:scale-110 hover:text-[#1E90FF] hover:border-1 hover:border-[#1E90FF] hover:bg-transparent;
+}
+

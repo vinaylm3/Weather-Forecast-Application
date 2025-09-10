@@ -24,10 +24,10 @@ let toggleCircle = document.getElementById('toggleCircle');
 let isOn = false;
 
 // Event listener for toggle button
-toggleBtn.addEventListener('click', toggleTemperatureUnits);
+toggleBtn.addEventListener("click", toggleTemperatureUnits);
 
 // Event listener for history dropdown selection
-historyDropDown.addEventListener('change', historyOptionSelected);
+historyDropDown.addEventListener("change", historyOptionSelected);
 
 // Close popup when clicking the close button
 closeBtn.addEventListener("click", () => {
@@ -42,7 +42,7 @@ overlay.addEventListener("click", (event) => {
 });
 
 // Event listener for using search button
-searchCityBtn.addEventListener('click', () => {
+searchCityBtn.addEventListener("click", () => {
     let city = document.getElementById('city-input').value.trim();
     if (!city) {
         // alert('Please enter a city name.');
@@ -62,7 +62,7 @@ searchCityBtn.addEventListener('click', () => {
 })
 
 // Event listener for using current location button
-useCurrentLocationBtn.addEventListener('click', () => {
+useCurrentLocationBtn.addEventListener("click", () => {
     console.log('Fetching weather for current location');
     // Add functionality to fetch and display weather for the current location
     if (navigator.geolocation) {
