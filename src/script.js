@@ -2,15 +2,17 @@
 document.addEventListener('DOMContentLoaded', populateHistoryDropdown);
 
 // Get references to DOM elements
+const mainSection = document.getElementById('main-section');
 const searchCityBtn = document.getElementById('search-city-btn');
 const useCurrentLocationBtn = document.getElementById('use-current-location-btn');
 const searchCityInput = document.getElementById('city-input')
 const historyDropDown = document.getElementById('history-drop-down');
 const currentWeatherDiv = document.getElementById('current-weather');
-const forecastHeader = document.getElementById('forecast');
+const forecastMain = document.getElementById('forecast-main');
 const forecastDiv = document.getElementById('forecast-container');
 const overlay = document.getElementById("popup-overlay");
 const closeBtn = document.getElementById("close-popup");
+const popupMain = document.getElementById("popup-main");
 const popupMessage = document.getElementById("popup-message");
 
 // Initial references for temperature conversion
@@ -93,6 +95,7 @@ async function fetchData(city) {
     console.log(data);
     updateCurrentWeatherUI(data);
     addToHistory(city);
+    mainSection.classList.add("lg:flex");
 }
 
 // Function to fetch weather data using coordinates
@@ -101,6 +104,7 @@ async function fetchDataByCoords(lat, lon) {
     let data = await response.json();
     console.log(data);
     updateCurrentWeatherUI(data)
+    mainSection.classList.add("lg:flex");
 }
 
 // Function to fetch 5-day forecast data from OpenWeatherMap API
@@ -222,6 +226,7 @@ function updateCurrentWeatherUI(data) {
         </div>
     `;
     reassignTempAndButtons();
+    checkHighTemperature(data.main.temp);
 }
 
 // Function to reassign temperature elements and buttons after updating the UI
@@ -237,7 +242,7 @@ function reassignTempAndButtons() {
 
 // Function to update the forecast UI
 function updateForecastUI(data) {
-    forecastHeader.classList.remove('hidden');
+    forecastMain.classList.remove('hidden');
     forecastDiv.innerHTML = ''; // Clear previous forecast data
     // Update the forecast section with fetched data
     for (let i=5; i<data.list.length; i+=8) {
@@ -344,8 +349,10 @@ function updateWeatherIcon(description) {
 // Function to update temperature to Fahrenheit
 function updateToFahrenheit(){
     console.log('Converting to Fahrenheit');
-    if (currentTempP.innerHTML === '-- &deg;C') {
-        currentTempP.innerHTML = '-- &deg;F';
+    console.log(currentTempP.innerHTML);
+    if (currentTempP.innerHTML === '-- °C') {
+        currentTempP.innerHTML = '-- °F';
+        feelsLikeTempP.innerHTML = 'Feels Like : -- °F';
     }
     else {
         let currentTempC = parseFloat(currentTempP.textContent);
@@ -353,7 +360,7 @@ function updateToFahrenheit(){
         currentTempP.innerHTML = `${currentTempF} &deg;F`;
 
         let feelsLikeTempC = parseFloat(feelsLikeTempP.textContent.split(':')[1]);
-        let feelsLikeTempF = convertToFahrenheit(currentTempC);
+        let feelsLikeTempF = convertToFahrenheit(feelsLikeTempC);
         feelsLikeTempP.innerHTML = `Feels Like : ${feelsLikeTempF} &deg;F`;
     }
 }
@@ -361,8 +368,9 @@ function updateToFahrenheit(){
 // Function to update temperature to Celsius
 function updateToCelsius() {
     console.log('Converting to Celsius');
-    if (currentTempP.innerHTML === '-- &deg;F') {
-        currentTempP.innerHTML = '-- &deg;C';
+    if (currentTempP.innerHTML === '-- °F') {
+        currentTempP.innerHTML = '-- °C';
+        feelsLikeTempP.innerHTML = 'Feels Like : -- °C';
     }
     else {
         let currentTempF = parseFloat(currentTempP.textContent);
@@ -370,7 +378,7 @@ function updateToCelsius() {
         currentTempP.innerHTML = `${currentTempC} &deg;C`;
 
         let feelsLikeTempF = parseFloat(feelsLikeTempP.textContent.split(':')[1]);
-        let feelsLikeTempC = convertToCelsius(currentTempF);
+        let feelsLikeTempC = convertToCelsius(feelsLikeTempF);
         feelsLikeTempP.innerHTML = `Feels Like : ${feelsLikeTempC} &deg;C`;
     }
 }
@@ -388,4 +396,18 @@ function convertToCelsius(temp) {
 // Function to convert city name to Pascal Case
 function convertToPascalCase(text) {
     return text.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ');
+}
+
+// Function to check for high temperature and show alert
+function checkHighTemperature(tempC) {
+    if (tempC >= 40) { // Threshold for high temperature alert
+        highTempAlert();
+    }
+}
+
+// Function to show high temperature alert
+function highTempAlert() {
+    popupMain.innerHTML = "Heat Alert !";
+    popupMessage.innerHTML = "Stay Hydrated and Cool.";
+    overlay.classList.remove("hidden");
 }

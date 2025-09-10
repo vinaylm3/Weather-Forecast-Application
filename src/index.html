@@ -13,7 +13,7 @@
 
 <body class="text-white bg-gradient-to-br from-[#2980B9] via-[#6DD5FA] to-[#ffffff]">
     <header>
-        <h1 class="text-3xl font-bold text-center mt-6 mb-6">Weather Forecast App</h1>
+        <h1 class="text-3xl font-bold text-center p-4 mb-6 bg-gray-800">Weather Forecast App</h1>
         <section class="flex flex-col gap-4 justify-center items-center">
             <div class="flex gap-2">
                 <button id="use-current-location-btn" class="bg-gray-800 p-2 rounded-4xl popup-anim-icon">
@@ -38,80 +38,82 @@
             <!-- Popup Box -->
             <div
                 class="text-white bg-gray-800 p-6 rounded-4xl w-80 flex flex-col items-center justify-center shadow-2xl shadow-black">
-                <h2 class="text-xl font-bold mb-4">Invalid City Name</h2>
+                <h2 id="popup-main" class="text-xl font-bold mb-4">Invalid City Name</h2>
                 <p id="popup-message" class="mb-8">This is a popup.</p>
                 <button id="close-popup" class="px-4 py-2 text-white rounded-lg popup-anim-btn">Close</button>
             </div>
         </div>
-        <section>
-            <h2 class="font-bold text-center text-2xl mt-4">Current Weather</h2>
-            <!-- Current weather details will be dynamically inserted here -->
-            <!-- Template -->
-            <section id="current-weather">
-                <div id="current-weather-card"
-                    class="flex flex-col mt-3 ml-6 mr-6 mb-6 items-center justify-between border-black pl-4 pr-4 pb-4 rounded-4xl shadow-2xl shadow-black bg-gray-800">
-                    <div class="flex justify-center relative mb-2">
-                        <img src="https://openweathermap.org/img/wn/02d@2x.png" alt="few clouds icon"
-                            class="w-30 h-30" />
-                        <p class="absolute bottom-0">Few Clouds</p>
-                    </div>
-                    <div class="flex flex-col gap-4 justify-center items-center">
-                        <h3 class="text-2xl">City Name</h3>
-                        <p id="current-temp" class="text-3xl">-- &deg;C</p>
-                        <p id="feels-like-temp">Feels Like : -- &deg;C</p>
-                        <!-- Toggle Button -->
-                        <button id="toggleBtn"
-                            class="relative inline-flex items-center w-20 h-10 px-1 transition bg-gray-700 rounded-full focus:outline-none">
-                            <span id="toggleCircle"
-                                class="flex items-center justify-center w-8 h-8 text-sm font-bold text-gray-700 transform bg-white rounded-full popup-anim-icon">
-                                &deg;C
-                            </span>
-                        </button>
-                        <div class="flex gap-16 mt-4">
-                            <div class="flex flex-col gap-4">
-                                <div class="flex gap-4 items-center">
-                                    <i class="fa-solid fa-water fa-2xl" style="color: #ffffff"></i>
-                                    <p>- %</p>
+        <section id="main-section" class="">
+            <section class="md:w-[60%] lg:w-[30%] mx-auto">
+                <h2 class="font-bold text-center text-2xl mt-4 lg:mt-2">Current Weather</h2>
+                <!-- Current weather details will be dynamically inserted here -->
+                <!-- Template -->
+                <section id="current-weather">
+                    <div id="current-weather-card"
+                        class="flex flex-col mt-3 ml-6 mr-6 mb-6 items-center justify-between border-black pl-4 pr-4 pb-4 rounded-4xl shadow-2xl shadow-black bg-gray-800">
+                        <div class="flex justify-center relative mb-2">
+                            <img src="https://openweathermap.org/img/wn/02d@2x.png" alt="few clouds icon"
+                                class="w-30 h-30" />
+                            <p class="absolute bottom-0">Few Clouds</p>
+                        </div>
+                        <div class="flex flex-col gap-4 justify-center items-center">
+                            <h3 class="text-2xl">City Name</h3>
+                            <p id="current-temp" class="text-3xl">-- &deg;C</p>
+                            <p id="feels-like-temp">Feels Like : -- &deg;C</p>
+                            <!-- Toggle Button -->
+                            <button id="toggleBtn"
+                                class="relative inline-flex items-center w-20 h-10 px-1 transition bg-gray-700 rounded-full focus:outline-none">
+                                <span id="toggleCircle"
+                                    class="flex items-center justify-center w-8 h-8 text-sm font-bold text-gray-700 transform bg-white rounded-full popup-anim-icon">
+                                    &deg;C
+                                </span>
+                            </button>
+                            <div class="flex gap-16 mt-4">
+                                <div class="flex flex-col gap-4">
+                                    <div class="flex gap-4 items-center">
+                                        <i class="fa-solid fa-water fa-2xl" style="color: #ffffff"></i>
+                                        <p>- %</p>
+                                    </div>
+                                    <p class="text-center">Humidity</p>
                                 </div>
-                                <p class="text-center">Humidity</p>
-                            </div>
-                            <div class="flex flex-col gap-4">
-                                <div class="flex gap-4 items-center">
-                                    <i class="fa-solid fa-wind fa-2xl" style="color: #ffffff"></i>
-                                    <p>- m/sec</p>
+                                <div class="flex flex-col gap-4">
+                                    <div class="flex gap-4 items-center">
+                                        <i class="fa-solid fa-wind fa-2xl" style="color: #ffffff"></i>
+                                        <p>- m/sec</p>
+                                    </div>
+                                    <p class="text-center">Wind Speed</p>
                                 </div>
-                                <p class="text-center">Wind Speed</p>
                             </div>
                         </div>
                     </div>
-                </div>
+                </section>
             </section>
-        </section>
-        <section>
-            <h2 id="forecast" class="font-bold text-center text-2xl mt-12 hidden">
-                5-Day Forecast
-            </h2>
-            <section id="forecast-container" class="grid grid-cols-1 gap-4 p-4">
-                <!-- Forecast cards will be dynamically inserted here -->
-                <!-- Template 
-                <div class="flex m-2 items-center justify-between border-black p-4 rounded-4xl shadow-2xl shadow-black bg-gray-800">
-                    <div class="flex flex-col gap-2">
-                        <h3><i class="fa-solid fa-calendar fa-lg mr-4" style="color: #ffffff;"></i> --/--/--</h3>
-                        <p><i class="fa-solid fa-temperature-high fa-lg mr-4" style="color: #ffffff;"></i> -- °C</p>
-                        <p><i class="fa-solid fa-water fa-lg mr-4" style="color: #ffffff;"></i> -- %</p>
-                        <p><i class="fa-solid fa-wind fa-lg mr-4" style="color: #ffffff;"></i> -- m/sec</p>
+            <section id="forecast-main" class="hidden">
+                <h2 class="font-bold text-center text-2xl mt-12 lg:mt-2">
+                    5-Day Forecast
+                </h2>
+                <section id="forecast-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mb-4 gap-4 p-4">
+                    <!-- Forecast cards will be dynamically inserted here -->
+                    <!-- Template 
+                    <div class="flex m-2 items-center justify-between border-black p-4 rounded-4xl shadow-2xl shadow-black bg-gray-800">
+                        <div class="flex flex-col gap-2">
+                            <h3><i class="fa-solid fa-calendar fa-lg mr-4" style="color: #ffffff;"></i> --/--/--</h3>
+                            <p><i class="fa-solid fa-temperature-high fa-lg mr-4" style="color: #ffffff;"></i> -- °C</p>
+                            <p><i class="fa-solid fa-water fa-lg mr-4" style="color: #ffffff;"></i> -- %</p>
+                            <p><i class="fa-solid fa-wind fa-lg mr-4" style="color: #ffffff;"></i> -- m/sec</p>
+                        </div>
+                        <div class="flex justify-center relative">
+                            <img src="https://openweathermap.org/img/wn/02d@2x.png" alt="few clouds icon" class="w-30 h-30" />
+                            <p class="absolute bottom-0">Few Clouds</p>
+                        </div>
                     </div>
-                    <div class="flex justify-center relative">
-                        <img src="https://openweathermap.org/img/wn/02d@2x.png" alt="few clouds icon" class="w-30 h-30" />
-                        <p class="absolute bottom-0">Few Clouds</p>
-                    </div>
-                </div>
-                -->
+                    -->
+                </section>
             </section>
         </section>
     </main>
     <footer>
-        <div class="flex-col items-center justify-center gap-8 p-4 bg-gray-800">
+        <div class="p-4 bg-gray-800">
             <div class="flex items-center justify-center gap-8">
                 <img src="https://openweathermap.org/themes/openweathermap/assets/img/logo_white_cropped.png"
                     alt="OpenWeatherMap Logo" class="w-20 h-10">
@@ -119,7 +121,6 @@
                     <a href="https://openweathermap.org/" target="_blank" class="text-center underline">OpenWeather</a>
                 </h3>
             </div>
-            <p class="text-center mt-6 mb-4">Developed by Guduru Vinay</p>
         </div>
     </footer>
     <script src="./script.js"></script>
