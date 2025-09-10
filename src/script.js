@@ -4,6 +4,13 @@ const currentWeatherDiv = document.getElementById('current-weather');
 const forecastHeader = document.getElementById('forecast');
 const forecastDiv = document.getElementById('forecast-container');
 
+let convertToFahrenheitBtn = document.getElementById('convert-to-fahrenheit');
+let convertToCelsiusBtn = document.getElementById('convert-to-celsius');
+let currentTempP = document.getElementById('current-temp');
+
+convertToFahrenheitBtn.addEventListener('click', convertToFahrenheit);
+convertToCelsiusBtn.addEventListener('click', convertToCelsius);
+
 searchCityBtn.addEventListener('click', () => {
     const city = document.getElementById('city-input').value;
     console.log(`Searching weather for city: ${city}`);
@@ -59,13 +66,16 @@ async function fetchForecastDataByCoords(lat, lon) {
 }
 
 function updateCurrentWeatherUI(data) {
+    currentWeatherDiv.innerHTML = ''; // Clear previous current weather data
     // Update the current weather section with fetched data
     currentWeatherDiv.innerHTML = `
         <div class="flex flex-col m-6 items-center justify-between border-black p-4 rounded-4xl shadow-2xl shadow-black bg-gray-800">
             <img src=${updateWeatherIcon(data.weather[0].description)} alt="${data.weather[0].description} icon" class="w-30 h-30">
             <div class="flex flex-col gap-4">
-                <p class="text-center text-3xl">${data.main.temp} °C</p>
                 <h3 class="text-center text-2xl">${data.name}</h3>
+                <p id="current-temp" class="text-center text-3xl">${data.main.temp} °C</p>
+                <button id="convert-to-fahrenheit" class="bg-white text-black pl-4 pr-4 p-2 rounded-4xl">Convert to Fahrenheit (°F)</button>
+                <button id="convert-to-celsius" class="bg-white text-black pl-4 pr-4 p-2 rounded-4xl hidden">Convert to Celsius (°C)</button>
                 <div class="flex gap-16 mt-4">
                     <div class="flex flex-col gap-4">
                         <div class="flex gap-4 items-center">
@@ -85,6 +95,15 @@ function updateCurrentWeatherUI(data) {
             </div>
         </div>
     `;
+    reassignTempAndButtons();
+}
+
+function reassignTempAndButtons() {
+    convertToFahrenheitBtn = document.getElementById('convert-to-fahrenheit');
+    convertToCelsiusBtn = document.getElementById('convert-to-celsius');
+    currentTempP = document.getElementById('current-temp');
+    convertToFahrenheitBtn.addEventListener('click', convertToFahrenheit);
+    convertToCelsiusBtn.addEventListener('click', convertToCelsius);
 }
 
 function updateForecastUI(data) {
@@ -179,4 +198,32 @@ function updateWeatherIcon(description) {
             console.log('Weather icon not found, returning few clouds icon.');
             return "https://openweathermap.org/img/wn/02d@2x.png"; // Default icon
     }
+}
+
+function convertToFahrenheit(){
+    console.log('Converting to Fahrenheit');
+    if (currentTempP.textContent === '-- °C') {
+        currentTempP.textContent = '-- °F';
+    }
+    else {
+        let currentTempC = parseFloat(currentTempP.textContent);
+        let currentTempF = ((currentTempC * 9/5) + 32).toFixed(2);
+        currentTempP.textContent = `${currentTempF} °F`;
+    }
+    convertToFahrenheitBtn.classList.add('hidden');
+    convertToCelsiusBtn.classList.remove('hidden');
+}
+
+function convertToCelsius() {
+    console.log('Converting to Celsius');
+    if (currentTempP.textContent === '-- °F') {
+        currentTempP.textContent = '-- °C';
+    }
+    else {
+        let currentTempF = parseFloat(currentTempP.textContent);
+        let currentTempC = ((currentTempF - 32) * 5/9).toFixed(2);
+        currentTempP.textContent = `${currentTempC} °C`;
+    }
+    convertToCelsiusBtn.classList.add('hidden');
+    convertToFahrenheitBtn.classList.remove('hidden');
 }
