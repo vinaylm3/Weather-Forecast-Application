@@ -12,27 +12,18 @@ const forecastDiv = document.getElementById('forecast-container');
 
 // Initial references for temperature conversion
 let currentWeatherCard = document.getElementById('current-weather-card');
-let convertToFahrenheitBtn = document.getElementById('convert-to-fahrenheit');
-let convertToCelsiusBtn = document.getElementById('convert-to-celsius');
 let currentTempP = document.getElementById('current-temp');
 
-// Event listeners for temperature conversion buttons
-convertToFahrenheitBtn.addEventListener('click', convertToFahrenheit);
-convertToCelsiusBtn.addEventListener('click', convertToCelsius);
+// Toggle Button for Temperature Units
+let toggleBtn = document.getElementById('toggleBtn');
+let toggleCircle = document.getElementById('toggleCircle');
+let isOn = false;
+
+// Event listener for toggle button
+toggleBtn.addEventListener('click', toggleTemperatureUnits);
 
 // Event listener for history dropdown selection
 historyDropDown.addEventListener('change', historyOptionSelected);
-
-// Function to handle selection from history dropdown
-function historyOptionSelected() {
-    let selectedCity = historyDropDown.value;
-    if (selectedCity) {
-        console.log(`Selected city from history: ${selectedCity}`);
-        fetchData(selectedCity);
-        fetchForecastData(selectedCity);
-        searchCityInput.value = ''; // Clear input field after search
-    }
-}
 
 // Event listener for using search button
 searchCityBtn.addEventListener('click', () => {
@@ -108,6 +99,31 @@ async function fetchForecastDataByCoords(lat, lon) {
     updateForecastUI(data)
 }
 
+// Function to handle selection from history dropdown
+function historyOptionSelected() {
+    let selectedCity = historyDropDown.value;
+    if (selectedCity) {
+        console.log(`Selected city from history: ${selectedCity}`);
+        fetchData(selectedCity);
+        fetchForecastData(selectedCity);
+        searchCityInput.value = ''; // Clear input field after search
+    }
+}
+
+// Function to toggle temperature units
+function toggleTemperatureUnits() {
+    isOn = !isOn;
+    if (isOn) {
+        toggleCircle.classList.add('translate-x-10');
+        toggleCircle.innerHTML = "&deg;F";
+        convertToFahrenheit();
+    } else {
+        toggleCircle.classList.remove('translate-x-10');
+        toggleCircle.innerHTML = "&deg;C";
+        convertToCelsius();
+    }
+}
+
 // Function to add a new item to the history
 function addToHistory(city) {
     let history = JSON.parse(localStorage.getItem('dropdownHistory')) || [];
@@ -149,11 +165,14 @@ function updateCurrentWeatherUI(data) {
     currentWeatherDiv.innerHTML = `
         <div id="current-weather-card" class="flex flex-col m-6 items-center justify-between border-black p-4 rounded-4xl shadow-2xl shadow-black bg-gray-800">
             <img src=${updateWeatherIcon(data.weather[0].description)} alt="${data.weather[0].description} icon" class="w-30 h-30">
-            <div class="flex flex-col gap-4">
-                <h3 class="text-center text-2xl">${data.name}</h3>
-                <p id="current-temp" class="text-center text-3xl">${data.main.temp} °C</p>
-                <button id="convert-to-fahrenheit" class="bg-white text-black pl-4 pr-4 p-2 rounded-4xl">Convert to Fahrenheit (°F)</button>
-                <button id="convert-to-celsius" class="bg-white text-black pl-4 pr-4 p-2 rounded-4xl hidden">Convert to Celsius (°C)</button>
+            <div class="flex flex-col gap-4 justify-center items-center">
+                <h3 class="text-2xl">${data.name}</h3>
+                <p id="current-temp" class="text-3xl">${data.main.temp} &deg;C</p>
+                <button id="toggleBtn" class="relative inline-flex items-center w-20 h-10 px-1 transition bg-gray-700 rounded-full focus:outline-none">
+                    <span id="toggleCircle" class="flex items-center justify-center w-8 h-8 text-sm font-bold text-gray-700 transition transform bg-white rounded-full">
+                        &deg;C
+                    </span>
+                </button>
                 <div class="flex gap-16 mt-4">
                     <div class="flex flex-col gap-4">
                         <div class="flex gap-4 items-center">
@@ -179,11 +198,11 @@ function updateCurrentWeatherUI(data) {
 // Function to reassign temperature elements and buttons after updating the UI
 function reassignTempAndButtons() {
     currentWeatherCard = document.getElementById('current-weather-card');
-    convertToFahrenheitBtn = document.getElementById('convert-to-fahrenheit');
-    convertToCelsiusBtn = document.getElementById('convert-to-celsius');
     currentTempP = document.getElementById('current-temp');
-    convertToFahrenheitBtn.addEventListener('click', convertToFahrenheit);
-    convertToCelsiusBtn.addEventListener('click', convertToCelsius);
+    toggleBtn = document.getElementById('toggleBtn');
+    toggleCircle = document.getElementById('toggleCircle');
+    isOn = false;
+    toggleBtn.addEventListener('click', toggleTemperatureUnits);
 }
 
 // Function to update the forecast UI
@@ -197,7 +216,7 @@ function updateForecastUI(data) {
             <div class="flex m-2 items-center justify-between border-black p-4 rounded-4xl shadow-2xl shadow-black bg-gray-800">
                 <div class="flex flex-col gap-2">
                     <h3><i class="fa-solid fa-calendar fa-lg mr-4" style="color: #ffffff;"></i>${data.list[i].dt_txt.split(' ')[0]}</h3>
-                    <p><i class="fa-solid fa-temperature-high fa-lg mr-4" style="color: #ffffff;"></i>${data.list[i].main.temp} °C</p>
+                    <p><i class="fa-solid fa-temperature-high fa-lg mr-4" style="color: #ffffff;"></i>${data.list[i].main.temp} &deg;C</p>
                     <p><i class="fa-solid fa-water fa-lg mr-4" style="color: #ffffff;"></i>${data.list[i].main.humidity} %</p>
                     <p><i class="fa-solid fa-wind fa-lg mr-4" style="color: #ffffff;"></i>${data.list[i].wind.speed} m/sec</p>
                 </div>
@@ -292,31 +311,27 @@ function updateWeatherIcon(description) {
 // Function to convert temperature to Fahrenheit
 function convertToFahrenheit(){
     console.log('Converting to Fahrenheit');
-    if (currentTempP.textContent === '-- °C') {
-        currentTempP.textContent = '-- °F';
+    if (currentTempP.innerHTML === '-- &deg;C') {
+        currentTempP.innerHTML = '-- &deg;F';
     }
     else {
         let currentTempC = parseFloat(currentTempP.textContent);
         let currentTempF = ((currentTempC * 9/5) + 32).toFixed(2);
-        currentTempP.textContent = `${currentTempF} °F`;
+        currentTempP.innerHTML = `${currentTempF} &deg;F`;
     }
-    convertToFahrenheitBtn.classList.add('hidden');
-    convertToCelsiusBtn.classList.remove('hidden');
 }
 
 // Function to convert temperature to Celsius
 function convertToCelsius() {
     console.log('Converting to Celsius');
-    if (currentTempP.textContent === '-- °F') {
-        currentTempP.textContent = '-- °C';
+    if (currentTempP.innerHTML === '-- &deg;F') {
+        currentTempP.innerHTML = '-- &deg;C';
     }
     else {
         let currentTempF = parseFloat(currentTempP.textContent);
         let currentTempC = ((currentTempF - 32) * 5/9).toFixed(2);
-        currentTempP.textContent = `${currentTempC} °C`;
+        currentTempP.innerHTML = `${currentTempC} &deg;C`;
     }
-    convertToCelsiusBtn.classList.add('hidden');
-    convertToFahrenheitBtn.classList.remove('hidden');
 }
 
 // Function to convert city name to Pascal Case

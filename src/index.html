@@ -1,29 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Weather Forecast Application</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link href="./output.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+        integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="./output.css" rel="stylesheet" />
 </head>
+
 <body class="text-white bg-gradient-to-br from-[#2980B9] via-[#6DD5FA] to-[#ffffff]">
     <header>
         <h1 class="text-3xl font-bold text-center my-4">Weather Forecast App</h1>
-        <nav class="flex flex-col items-center">
-            <section>
-                <label for="city-input">Enter City Name :</label>
+        <section class="flex flex-col gap-4 justify-center items-center">
+            <div class="flex gap-2">
+                <button id="use-current-location-btn" class="bg-gray-800 p-2 rounded-4xl">
+                    <i class="fa-solid fa-location-crosshairs fa-lg"></i>
+                </button>
+                <input type="text" id="city-input" placeholder="Enter City Name"
+                    class="bg-gray-800 pl-4 pr-4 p-2 rounded-4xl" spellcheck="false" />
+                <button id="search-city-btn" class="bg-gray-800 p-2 rounded-4xl">
+                    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+                </button>
+            </div>
+            <div>
+                <label for="">Recent Search :</label>
                 <select id="history-drop-down"></select>
-                <div>
-                    <input type="text" id="city-input" placeholder="e.g. Hyderabad, Mumbai" class="bg-gray-800 pl-4 pr-4 p-2 rounded-4xl mt-2" spellcheck="false">
-                    <button id="search-city-btn" class="bg-gray-800 p-2 rounded-4xl"><i class="fa-solid fa-magnifying-glass fa-lg"></i></button>
-                </div> 
-            </section>
-            <section class="flex flex-col gap-2 justify-center items-center mt-2">
-                <span>or</span>
-                <button id="use-current-location-btn" class="bg-gray-800 pl-4 pr-4 p-2 rounded-4xl">Use Current Location</button>
-            </section>
-        </nav>
+            </div>
+        </section>
     </header>
     <main>
         <section>
@@ -31,24 +37,31 @@
             <!-- Current weather details will be dynamically inserted here -->
             <!-- Template -->
             <section id="current-weather">
-                <div id="current-weather-card" class="flex flex-col m-6 items-center justify-between border-black p-4 rounded-4xl shadow-2xl shadow-black bg-gray-800">
-                    <img src="https://openweathermap.org/img/wn/02d@2x.png" alt="few clouds icon" class="w-30 h-30">
-                    <div class="flex flex-col gap-4">
-                        <h3 class="text-center text-2xl">City Name</h3>
-                        <p id="current-temp" class="text-center text-3xl">-- °C</p>
-                        <button id="convert-to-fahrenheit" class="bg-white text-black pl-4 pr-4 p-2 rounded-4xl">Convert to Fahrenheit (°F)</button>
-                        <button id="convert-to-celsius" class="bg-white text-black pl-4 pr-4 p-2 rounded-4xl hidden">Convert to Celsius (°C)</button>
+                <div id="current-weather-card"
+                    class="flex flex-col m-6 items-center justify-between border-black p-4 rounded-4xl shadow-2xl shadow-black bg-gray-800">
+                    <img src="https://openweathermap.org/img/wn/02d@2x.png" alt="few clouds icon" class="w-30 h-30" />
+                    <div class="flex flex-col gap-4 justify-center items-center">
+                        <h3 class="text-2xl">City Name</h3>
+                        <p id="current-temp" class="text-3xl">-- &deg;C</p>
+                        <!-- Toggle Button -->
+                        <button id="toggleBtn"
+                            class="relative inline-flex items-center w-20 h-10 px-1 transition bg-gray-700 rounded-full focus:outline-none">
+                            <span id="toggleCircle"
+                                class="flex items-center justify-center w-8 h-8 text-sm font-bold text-gray-700 transition transform bg-white rounded-full">
+                                &deg;C
+                            </span>
+                        </button>
                         <div class="flex gap-16 mt-4">
                             <div class="flex flex-col gap-4">
                                 <div class="flex gap-4 items-center">
-                                    <i class="fa-solid fa-water fa-2xl" style="color: #ffffff;"></i>
+                                    <i class="fa-solid fa-water fa-2xl" style="color: #ffffff"></i>
                                     <p>- %</p>
                                 </div>
                                 <p class="text-center">Humidity</p>
                             </div>
                             <div class="flex flex-col gap-4">
                                 <div class="flex gap-4 items-center">
-                                    <i class="fa-solid fa-wind fa-2xl" style="color: #ffffff;"></i>
+                                    <i class="fa-solid fa-wind fa-2xl" style="color: #ffffff"></i>
                                     <p>- m/sec</p>
                                 </div>
                                 <p class="text-center">Wind Speed</p>
@@ -59,7 +72,9 @@
             </section>
         </section>
         <section>
-            <h2 id="forecast" class="font-bold text-center text-2xl mt-12 hidden">5-Day Forecast</h2>
+            <h2 id="forecast" class="font-bold text-center text-2xl mt-12 hidden">
+                5-Day Forecast
+            </h2>
             <section id="forecast-container" class="grid grid-cols-1 gap-4 p-4">
                 <!-- Forecast cards will be dynamically inserted here -->
                 <!-- Template 
@@ -78,4 +93,5 @@
     </main>
     <script src="./script.js"></script>
 </body>
+
 </html>
