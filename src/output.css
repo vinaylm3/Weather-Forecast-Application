@@ -7,6 +7,8 @@
       "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
       "Courier New", monospace;
+    --color-blue-500: oklch(62.3% 0.214 259.815);
+    --color-gray-300: oklch(87.2% 0.01 258.338);
     --color-gray-700: oklch(37.3% 0.034 259.733);
     --color-gray-800: oklch(27.8% 0.033 256.848);
     --color-black: #000;
@@ -22,7 +24,9 @@
     --text-3xl--line-height: calc(2.25 / 1.875);
     --text-4xl: 2.25rem;
     --text-4xl--line-height: calc(2.5 / 2.25);
+    --font-weight-medium: 500;
     --font-weight-bold: 700;
+    --radius-md: 0.375rem;
     --radius-lg: 0.5rem;
     --radius-4xl: 2rem;
     --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
@@ -220,11 +224,17 @@
   .mt-12 {
     margin-top: calc(var(--spacing) * 12);
   }
+  .mr-2 {
+    margin-right: calc(var(--spacing) * 2);
+  }
   .mr-4 {
     margin-right: calc(var(--spacing) * 4);
   }
   .mr-6 {
     margin-right: calc(var(--spacing) * 6);
+  }
+  .mr-8 {
+    margin-right: calc(var(--spacing) * 8);
   }
   .mb-2 {
     margin-bottom: calc(var(--spacing) * 2);
@@ -244,6 +254,9 @@
   .ml-6 {
     margin-left: calc(var(--spacing) * 6);
   }
+  .block {
+    display: block;
+  }
   .flex {
     display: flex;
   }
@@ -252,6 +265,9 @@
   }
   .hidden {
     display: none;
+  }
+  .inline {
+    display: inline;
   }
   .inline-flex {
     display: inline-flex;
@@ -279,6 +295,15 @@
   }
   .w-80 {
     width: calc(var(--spacing) * 80);
+  }
+  .w-\[100\%\] {
+    width: 100%;
+  }
+  .w-full {
+    width: 100%;
+  }
+  .min-w-\[200px\] {
+    min-width: 200px;
   }
   .border-collapse {
     border-collapse: collapse;
@@ -329,12 +354,18 @@
   .rounded-lg {
     border-radius: var(--radius-lg);
   }
+  .rounded-md {
+    border-radius: var(--radius-md);
+  }
   .border {
     border-style: var(--tw-border-style);
     border-width: 1px;
   }
   .border-black {
     border-color: var(--color-black);
+  }
+  .border-gray-300 {
+    border-color: var(--color-gray-300);
   }
   .bg-gray-700 {
     background-color: var(--color-gray-700);
@@ -395,6 +426,9 @@
   .px-4 {
     padding-inline: calc(var(--spacing) * 4);
   }
+  .py-0 {
+    padding-block: calc(var(--spacing) * 0);
+  }
   .py-2 {
     padding-block: calc(var(--spacing) * 2);
   }
@@ -412,6 +446,9 @@
   }
   .text-center {
     text-align: center;
+  }
+  .align-middle {
+    vertical-align: middle;
   }
   .text-2xl {
     font-size: var(--text-2xl);
@@ -433,8 +470,18 @@
     --tw-font-weight: var(--font-weight-bold);
     font-weight: var(--font-weight-bold);
   }
+  .font-medium {
+    --tw-font-weight: var(--font-weight-medium);
+    font-weight: var(--font-weight-medium);
+  }
+  .whitespace-nowrap {
+    white-space: nowrap;
+  }
   .text-\[\#1E90FF\] {
     color: #1E90FF;
+  }
+  .text-black {
+    color: var(--color-black);
   }
   .text-gray-700 {
     color: var(--color-gray-700);
@@ -447,6 +494,10 @@
   }
   .shadow-2xl {
     --tw-shadow: 0 25px 50px -12px var(--tw-shadow-color, rgb(0 0 0 / 0.25));
+    box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
+  }
+  .shadow-sm {
+    --tw-shadow: 0 1px 3px 0 var(--tw-shadow-color, rgb(0 0 0 / 0.1)), 0 1px 2px -1px var(--tw-shadow-color, rgb(0 0 0 / 0.1));
     box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
   }
   .shadow-black {
@@ -463,6 +514,42 @@
     transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, visibility, content-visibility, overlay, pointer-events;
     transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
     transition-duration: var(--tw-duration, var(--default-transition-duration));
+  }
+  .focus\:border-\[\#1E90FF\] {
+    &:focus {
+      border-color: #1E90FF;
+    }
+  }
+  .focus\:border-\[\#2980B9\] {
+    &:focus {
+      border-color: #2980B9;
+    }
+  }
+  .focus\:border-blue-500 {
+    &:focus {
+      border-color: var(--color-blue-500);
+    }
+  }
+  .focus\:ring-2 {
+    &:focus {
+      --tw-ring-shadow: var(--tw-ring-inset,) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color, currentcolor);
+      box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
+    }
+  }
+  .focus\:ring-\[\#1E90FF\] {
+    &:focus {
+      --tw-ring-color: #1E90FF;
+    }
+  }
+  .focus\:ring-\[\#2980B9\] {
+    &:focus {
+      --tw-ring-color: #2980B9;
+    }
+  }
+  .focus\:ring-blue-500 {
+    &:focus {
+      --tw-ring-color: var(--color-blue-500);
+    }
   }
   .focus\:outline-none {
     &:focus {
