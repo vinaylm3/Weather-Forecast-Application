@@ -13,7 +13,7 @@
 
 <body class="text-white bg-gradient-to-br from-[#2980B9] via-[#6DD5FA] to-[#ffffff]">
     <header>
-        <h1 class="text-3xl font-bold text-center my-4">Weather Forecast App</h1>
+        <h1 class="text-3xl font-bold text-center mt-6 mb-6">Weather Forecast App</h1>
         <section class="flex flex-col gap-4 justify-center items-center">
             <div class="flex gap-2">
                 <button id="use-current-location-btn" class="bg-gray-800 p-2 rounded-4xl">
@@ -26,7 +26,7 @@
                 </button>
             </div>
             <div>
-                <label for="">Recent Search :</label>
+                <label for="history-drop-down">Recent Search :</label>
                 <select id="history-drop-down"></select>
             </div>
         </section>
@@ -91,6 +91,15 @@
             </section>
         </section>
     </main>
+    <footer>
+        <div class="flex items-center justify-center gap-8 p-4 bg-gray-800">
+            <img src="https://openweathermap.org/themes/openweathermap/assets/img/logo_white_cropped.png"
+                alt="OpenWeatherMap Logo" class="w-20 h-10">
+            <h3 class="text-center">Data provided by <a href="https://openweathermap.org/" target="_blank"
+                    class="text-center underline">OpenWeather</a>
+            </h3>
+        </div>
+    </footer>
     <script src="./script.js"></script>
 </body>
 
