@@ -13,6 +13,7 @@ const forecastDiv = document.getElementById('forecast-container');
 // Initial references for temperature conversion
 let currentWeatherCard = document.getElementById('current-weather-card');
 let currentTempP = document.getElementById('current-temp');
+let feelsLikeTempP = document.getElementById('feels-like-temp');
 
 // Toggle Button for Temperature Units
 let toggleBtn = document.getElementById('toggleBtn');
@@ -116,11 +117,11 @@ function toggleTemperatureUnits() {
     if (isOn) {
         toggleCircle.classList.add('translate-x-10');
         toggleCircle.innerHTML = "&deg;F";
-        convertToFahrenheit();
+        updateToFahrenheit();
     } else {
         toggleCircle.classList.remove('translate-x-10');
         toggleCircle.innerHTML = "&deg;C";
-        convertToCelsius();
+        updateToCelsius();
     }
 }
 
@@ -163,27 +164,36 @@ function updateCurrentWeatherUI(data) {
     currentWeatherDiv.innerHTML = ''; // Clear previous current weather data
     // Update the current weather section with fetched data
     currentWeatherDiv.innerHTML = `
-        <div id="current-weather-card" class="flex flex-col m-6 items-center justify-between border-black p-4 rounded-4xl shadow-2xl shadow-black bg-gray-800">
-            <img src=${updateWeatherIcon(data.weather[0].description)} alt="${data.weather[0].description} icon" class="w-30 h-30">
+        <div id="current-weather-card"
+            class="flex flex-col mt-3 ml-6 mr-6 mb-6 items-center justify-between border-black pl-4 pr-4 pb-4 rounded-4xl shadow-2xl shadow-black bg-gray-800">
+            <div class="flex justify-center relative mb-2">
+                <img src=${updateWeatherIcon(data.weather[0].description)} alt="${data.weather[0].description} icon"
+                    class="w-30 h-30" />
+                <p class="absolute bottom-0">${convertToPascalCase(data.weather[0].description)}</p>
+            </div>
             <div class="flex flex-col gap-4 justify-center items-center">
                 <h3 class="text-2xl">${data.name}</h3>
                 <p id="current-temp" class="text-3xl">${data.main.temp} &deg;C</p>
-                <button id="toggleBtn" class="relative inline-flex items-center w-20 h-10 px-1 transition bg-gray-700 rounded-full focus:outline-none">
-                    <span id="toggleCircle" class="flex items-center justify-center w-8 h-8 text-sm font-bold text-gray-700 transition transform bg-white rounded-full">
+                <p id="feels-like-temp">Feels Like : ${data.main.feels_like} &deg;C</p>
+                <!-- Toggle Button -->
+                <button id="toggleBtn"
+                    class="relative inline-flex items-center w-20 h-10 px-1 transition bg-gray-700 rounded-full focus:outline-none">
+                    <span id="toggleCircle"
+                        class="flex items-center justify-center w-8 h-8 text-sm font-bold text-gray-700 transition transform bg-white rounded-full">
                         &deg;C
                     </span>
                 </button>
                 <div class="flex gap-16 mt-4">
                     <div class="flex flex-col gap-4">
                         <div class="flex gap-4 items-center">
-                            <i class="fa-solid fa-water fa-2xl" style="color: #ffffff;"></i>
+                            <i class="fa-solid fa-water fa-2xl" style="color: #ffffff"></i>
                             <p>${data.main.humidity} %</p>
                         </div>
                         <p class="text-center">Humidity</p>
                     </div>
                     <div class="flex flex-col gap-4">
                         <div class="flex gap-4 items-center">
-                            <i class="fa-solid fa-wind fa-2xl" style="color: #ffffff;"></i>
+                            <i class="fa-solid fa-wind fa-2xl" style="color: #ffffff"></i>
                             <p>${data.wind.speed} m/sec</p>
                         </div>
                         <p class="text-center">Wind Speed</p>
@@ -199,6 +209,7 @@ function updateCurrentWeatherUI(data) {
 function reassignTempAndButtons() {
     currentWeatherCard = document.getElementById('current-weather-card');
     currentTempP = document.getElementById('current-temp');
+    feelsLikeTempP = document.getElementById('feels-like-temp');
     toggleBtn = document.getElementById('toggleBtn');
     toggleCircle = document.getElementById('toggleCircle');
     isOn = false;
@@ -213,14 +224,17 @@ function updateForecastUI(data) {
     for (let i=5; i<data.list.length; i+=8) {
         const newforecast = document.createElement('div');
         newforecast.innerHTML = `
-            <div class="flex m-2 items-center justify-between border-black p-4 rounded-4xl shadow-2xl shadow-black bg-gray-800">
-                <div class="flex flex-col gap-2">
+            <div class="flex m-2 pl-4 pr-4 pb-4 items-center justify-between border-black rounded-4xl shadow-2xl shadow-black bg-gray-800">
+                <div class="flex flex-col gap-2 mt-4">
                     <h3><i class="fa-solid fa-calendar fa-lg mr-4" style="color: #ffffff;"></i>${data.list[i].dt_txt.split(' ')[0]}</h3>
                     <p><i class="fa-solid fa-temperature-high fa-lg mr-4" style="color: #ffffff;"></i>${data.list[i].main.temp} &deg;C</p>
                     <p><i class="fa-solid fa-water fa-lg mr-4" style="color: #ffffff;"></i>${data.list[i].main.humidity} %</p>
                     <p><i class="fa-solid fa-wind fa-lg mr-4" style="color: #ffffff;"></i>${data.list[i].wind.speed} m/sec</p>
                 </div>
-                <img src=${updateWeatherIcon(data.list[i].weather[0].description)} alt="${data.list[i].weather[0].description} icon" class="w-30 h-30">
+                <div class="flex justify-center relative">
+                    <img src=${updateWeatherIcon(data.list[i].weather[0].description)} alt="${data.list[i].weather[0].description} icon" class="w-30 h-30" />
+                    <p class="absolute bottom-0">${convertToPascalCase(data.list[i].weather[0].description)}</p>
+                </div>
             </div>
         `;
         const forecastcard = newforecast.querySelector('div');
@@ -308,33 +322,51 @@ function updateWeatherIcon(description) {
     }
 }
 
-// Function to convert temperature to Fahrenheit
-function convertToFahrenheit(){
+// Function to update temperature to Fahrenheit
+function updateToFahrenheit(){
     console.log('Converting to Fahrenheit');
     if (currentTempP.innerHTML === '-- &deg;C') {
         currentTempP.innerHTML = '-- &deg;F';
     }
     else {
         let currentTempC = parseFloat(currentTempP.textContent);
-        let currentTempF = ((currentTempC * 9/5) + 32).toFixed(2);
+        let currentTempF = convertToFahrenheit(currentTempC);
         currentTempP.innerHTML = `${currentTempF} &deg;F`;
+
+        let feelsLikeTempC = parseFloat(feelsLikeTempP.textContent.split(':')[1]);
+        let feelsLikeTempF = convertToFahrenheit(currentTempC);
+        feelsLikeTempP.innerHTML = `Feels Like : ${feelsLikeTempF} &deg;F`;
     }
 }
 
-// Function to convert temperature to Celsius
-function convertToCelsius() {
+// Function to update temperature to Celsius
+function updateToCelsius() {
     console.log('Converting to Celsius');
     if (currentTempP.innerHTML === '-- &deg;F') {
         currentTempP.innerHTML = '-- &deg;C';
     }
     else {
         let currentTempF = parseFloat(currentTempP.textContent);
-        let currentTempC = ((currentTempF - 32) * 5/9).toFixed(2);
+        let currentTempC = convertToCelsius(currentTempF);
         currentTempP.innerHTML = `${currentTempC} &deg;C`;
+
+        let feelsLikeTempF = parseFloat(feelsLikeTempP.textContent.split(':')[1]);
+        let feelsLikeTempC = convertToCelsius(currentTempF);
+        feelsLikeTempP.innerHTML = `Feels Like : ${feelsLikeTempC} &deg;C`;
     }
 }
 
+// Function to convert temperature to Fahrenheit
+function convertToFahrenheit(temp) {
+    return ((temp * 9/5) + 32).toFixed(2);
+}
+
+// Function to convert temperature to Celsius
+function convertToCelsius(temp) {
+    return ((temp - 32) * 5/9).toFixed(2);
+}
+
 // Function to convert city name to Pascal Case
-function convertToPascalCase(city) {
-    return city.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ');
+function convertToPascalCase(text) {
+    return text.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ');
 }

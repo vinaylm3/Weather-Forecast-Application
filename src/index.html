@@ -33,16 +33,21 @@
     </header>
     <main>
         <section>
-            <h2 class="font-bold text-center text-2xl mt-6">Current Weather</h2>
+            <h2 class="font-bold text-center text-2xl mt-4">Current Weather</h2>
             <!-- Current weather details will be dynamically inserted here -->
             <!-- Template -->
             <section id="current-weather">
                 <div id="current-weather-card"
-                    class="flex flex-col m-6 items-center justify-between border-black p-4 rounded-4xl shadow-2xl shadow-black bg-gray-800">
-                    <img src="https://openweathermap.org/img/wn/02d@2x.png" alt="few clouds icon" class="w-30 h-30" />
+                    class="flex flex-col mt-3 ml-6 mr-6 mb-6 items-center justify-between border-black pl-4 pr-4 pb-4 rounded-4xl shadow-2xl shadow-black bg-gray-800">
+                    <div class="flex justify-center relative mb-2">
+                        <img src="https://openweathermap.org/img/wn/02d@2x.png" alt="few clouds icon"
+                            class="w-30 h-30" />
+                        <p class="absolute bottom-0">Few Clouds</p>
+                    </div>
                     <div class="flex flex-col gap-4 justify-center items-center">
                         <h3 class="text-2xl">City Name</h3>
                         <p id="current-temp" class="text-3xl">-- &deg;C</p>
+                        <p id="feels-like-temp">Feels Like : -- &deg;C</p>
                         <!-- Toggle Button -->
                         <button id="toggleBtn"
                             class="relative inline-flex items-center w-20 h-10 px-1 transition bg-gray-700 rounded-full focus:outline-none">
@@ -85,7 +90,10 @@
                         <p><i class="fa-solid fa-water fa-lg mr-4" style="color: #ffffff;"></i> -- %</p>
                         <p><i class="fa-solid fa-wind fa-lg mr-4" style="color: #ffffff;"></i> -- m/sec</p>
                     </div>
-                    <img src="https://openweathermap.org/img/wn/02d@2x.png" alt="few clouds icon" class="w-30 h-30">
+                    <div class="flex justify-center relative">
+                        <img src="https://openweathermap.org/img/wn/02d@2x.png" alt="few clouds icon" class="w-30 h-30" />
+                        <p class="absolute bottom-0">Few Clouds</p>
+                    </div>
                 </div>
                 -->
             </section>
